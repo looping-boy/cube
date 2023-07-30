@@ -75,3 +75,36 @@ server.listen(PORT, () => {
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+
+
+
+
+// Create a WebSocket instance
+const socket = new WebSocket('ws://cube-app-ded2c0470b54.herokuapp.com:5001');
+
+// Event listener for when the connection is established
+socket.onopen = () => {
+    console.log('Connected to WebSocket server.');
+    sendMessage('Hello server, this is the client!');
+};
+
+// Event listener for receiving messages from the server
+socket.onmessage = (event) => {
+    const message = event.data;
+    console.log(`Received message from server: ${message}`);
+    // Process the received message as needed
+    // For example, update the UI with the received message
+};
+
+// Event listener for connection closure
+socket.onclose = () => {
+    console.log('Connection to WebSocket server closed.');
+};
+
+// Function to send a message to the server
+function sendMessage(message) {
+    socket.send(message);
+}
+
+sendMessage('Hello server, this is the client!');
