@@ -1,81 +1,74 @@
-const http = require("http");
+const WebSocket = require('ws');
+const http = require('http');
+const fs = require('fs');
 const express = require("express");
 const app = express();
 
-app.use(express.static("public"));
-// require("dotenv").config();
+const wss = new WebSocket.Server({ port: 5001 });
 
-const serverPort = process.env.PORT || 3000;
-const server = http.createServer(app);
-const WebSocket = require("ws");
+wss.on('connection', (ws) => {
+    console.log('Client connected.');
 
-let keepAliveId;
+    ws.send('Hello from server!');
 
-const wss =
-  process.env.NODE_ENV === "production"
-    ? new WebSocket.Server({ server })
-    : new WebSocket.Server({ port: 5001 });
+    ws.on('message', (message) => {
+        console.log(`Received IMU data: ${message}`);
+        wss.broadcast(`${message}`);
+    });
 
-server.listen(serverPort);
-console.log(`Server started on port ${serverPort} in stage ${process.env.NODE_ENV}`);
+    ws.on('close', () => {
+        console.log('Client disconnected.');
+    });
 
-wss.on("connection", function (ws, req) {
-  console.log("Connection Opened");
-  console.log("Client size: ", wss.clients.size);
 
-  if (wss.clients.size === 1) {
-    console.log("first connection. starting keepalive");
-    keepServerAlive();
-  }
+    // const sendDataInterval = setInterval(() => {
+    //     ws.send(`${messaging}`);
+    // }, 500);
 
-  ws.on("message", (data) => {
-    let stringifiedData = data.toString();
-    if (stringifiedData === 'pong') {
-      console.log('keepAlive');
-      return;
-    }
-    broadcast(ws, stringifiedData, false);
-  });
+    // // When the client disconnects, stop sending data
+    // ws.on('close', () => {
+    //     clearInterval(sendDataInterval);
+    // });
 
-  ws.on("close", (data) => {
-    console.log("closing connection");
 
-    if (wss.clients.size === 0) {
-      console.log("last client disconnected, stopping keepAlive interval");
-      clearInterval(keepAliveId);
-    }
-  });
 });
 
-// Implement broadcast function because of ws doesn't have it
-const broadcast = (ws, message, includeSelf) => {
-  if (includeSelf) {
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
-  } else {
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
-  }
-};
+wss.broadcast = function broadcast(msg) {
+    console.log(msg);
+    wss.clients.forEach(function each(client) {
+        client.send(msg);
+     });
+ };
 
-/**
- * Sends a ping message to all connected clients every 50 seconds
- */
- const keepServerAlive = () => {
-  keepAliveId = setInterval(() => {
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send('ping');
-      }
-    });
-  }, 50000);
-};
+console.log("WebSocket server started and listening on ws://localhost:5001");
+
+
+
+
+const server = http.createServer((req, res) => {
+    // Check if the request is for the root URL
+    if (req.url === '/') {
+        // Read the HTML file from the file system
+        fs.readFile('index.html', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(data);
+            }
+        });
+    } else {
+        // For other URLs, respond with a 404 Not Found error
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Not Found');
+    }
+});
+
+// Start the HTTP server to listen on port 5000
+server.listen(5002, () => {
+    console.log('HTTP server started and listening on http://localhost:5002');
+});
 
 
 app.get('/', (req, res) => {
