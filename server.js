@@ -1,6 +1,8 @@
 const WebSocket = require('ws');
 const http = require('http');
 const fs = require('fs');
+const express = require("express");
+const app = express();
 
 const wss = new WebSocket.Server({ port: 5001 });
 
@@ -66,4 +68,9 @@ const server = http.createServer((req, res) => {
 // Start the HTTP server to listen on port 5000
 server.listen(5002, () => {
     console.log('HTTP server started and listening on http://localhost:5002');
+});
+
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
 });
