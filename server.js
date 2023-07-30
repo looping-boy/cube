@@ -17,12 +17,21 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (message) => {
     console.log(`Received message from client: ${message}`);
+    wss.broadcast(`${message}`);
   });
 
   ws.on('close', () => {
     console.log('Client disconnected.');
   });
 });
+
+// Send Message to every clients
+wss.broadcast = function broadcast(msg) {
+    console.log(msg);
+    wss.clients.forEach(function each(client) {
+        client.send(msg);
+    });
+};
 
 // Serve the index.html file when the root URL is requested
 app.get('/', (req, res) => {
