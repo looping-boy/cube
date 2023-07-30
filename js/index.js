@@ -42,7 +42,7 @@ scene.add(box);
 
 // BOX MOVE WHEN MESSAGE REIVED :
 
-const socket = new WebSocket('ws://cube-app-ded2c0470b54.herokuapp.com:51400');
+const socket = new WebSocket('ws://cube-app-ded2c0470b54.herokuapp.com:5001');
         socket.onmessage = (event) => {
           const dataFromServer = event.data;
           console.log(dataFromServer)
