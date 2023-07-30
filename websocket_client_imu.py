@@ -10,7 +10,7 @@ import random
 
 async def send_imu_data():
     i = 0
-    async with websockets.connect("ws://localhost:5001") as websocket:
+    async with websockets.connect("ws://cube-i7ov.onrender.com:5001") as websocket:
         current_rotation = {
             'gyro_x': 0.0,
             'gyro_y': 0.0,

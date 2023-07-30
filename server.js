@@ -5,7 +5,7 @@ const wss = new WebSocket.Server({ port: 5001 });
 wss.on('connection', (ws) => {
     console.log('Client connected.');
 
-    // ws.send('Hello from server!');
+    ws.send('Hello from server!');
 
     ws.on('message', (message) => {
         console.log(`Received IMU data: ${message}`);

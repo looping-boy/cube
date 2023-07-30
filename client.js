@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 
-const ws = new WebSocket('ws://localhost:5001');
+const ws = new WebSocket('https://cube-i7ov.onrender.com:5001');
 
 ws.on('open', () => {
   console.log('Connected to server.');
