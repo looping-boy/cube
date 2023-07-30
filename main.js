@@ -4,7 +4,7 @@ const fs = require('fs');
 const express = require("express");
 const app = express();
 
-const wss = new WebSocket.Server({ port: 5001 });
+const wss = new WebSocket.Server({ noServer: true });
 
 wss.on('connection', (ws) => {
     console.log('Client connected.');
@@ -66,8 +66,9 @@ const server = http.createServer((req, res) => {
 });
 
 // Start the HTTP server to listen on port 5000
-server.listen(5002, () => {
-    console.log('HTTP server started and listening on http://localhost:5002');
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+    console.log(`HTTP server started and listening on ${PORT}`);
 });
 
 
