@@ -107,4 +107,4 @@ function sendMessage(message) {
     socket.send(message);
 }
 
-sendMessage('Hello server, this is the client!');
+// sendMessage('Hello server, this is the client!');
