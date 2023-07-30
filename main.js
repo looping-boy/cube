@@ -4,8 +4,8 @@ const fs = require('fs');
 const express = require("express");
 const app = express();
 
-app.use(express.static("./"));
-// app.use("/static", express.static('./static/'));
+// app.use(express.static("./"));
+app.use("/static", express.static('./static/'));
 
 const wss = new WebSocket.Server({ noServer: true });
 
