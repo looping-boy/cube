@@ -42,16 +42,16 @@ scene.add(box);
 
 // BOX MOVE WHEN MESSAGE REIVED :
 
-const socket = new WebSocket('ws://localhost:5001');
+const socket = new WebSocket('ws://cube-i7ov.onrender.com:5001');
         socket.onmessage = (event) => {
           const dataFromServer = event.data;
-          // console.log(dataFromServer);
-          const data = JSON.parse(dataFromServer);
-          // console.log(data);
-          box.rotation.x = data.gyro_x
-          boxInside.rotation.x = data.gyro_x
-          box.rotation.y = data.gyro_y
-          boxInside.rotation.y = data.gyro_y
+          console.log(dataFromServer)
+
+          // const data = JSON.parse(dataFromServer);
+          // box.rotation.x = data.gyro_x
+          // boxInside.rotation.x = data.gyro_x
+          // box.rotation.y = data.gyro_y
+          // boxInside.rotation.y = data.gyro_y
         };
 
 
