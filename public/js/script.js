@@ -54,6 +54,36 @@ scene.add(box);
 //           // boxInside.rotation.y = data.gyro_y
 //         };
 
+const socket = new WebSocket('wss://cube-app-ded2c0470b54.herokuapp.com');
+
+    // Event listener for when the connection is established
+    socket.onopen = () => {
+      console.log('Connected to WebSocket server.');
+    };
+
+    // Event listener for receiving messages from the server
+    socket.onmessage = (event) => {
+      const message = event.data;
+    //   console.log(`Received message from server: ${message}`);
+      document.getElementById('message').textContent = message;
+
+          const data = JSON.parse(message);
+          box.rotation.x = data.gyro_x
+          boxInside.rotation.x = data.gyro_x
+          box.rotation.y = data.gyro_y
+          boxInside.rotation.y = data.gyro_y
+
+    };
+
+    // Event listener for connection closure
+    socket.onclose = () => {
+      console.log('Connection to WebSocket server closed.');
+    };
+
+
+
+
+
 var pos = new THREE.Vector3(1.1, 0, 0);
 var normal = new THREE.Vector3().copy(pos).normalize();
 

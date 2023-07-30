@@ -18,24 +18,24 @@
 
   <script>
     // Create a WebSocket instance
-    const socket = new WebSocket('wss://cube-app-ded2c0470b54.herokuapp.com');
+    // const socket = new WebSocket('wss://cube-app-ded2c0470b54.herokuapp.com');
 
-    // Event listener for when the connection is established
-    socket.onopen = () => {
-      console.log('Connected to WebSocket server.');
-    };
+    // // Event listener for when the connection is established
+    // socket.onopen = () => {
+    //   console.log('Connected to WebSocket server.');
+    // };
 
-    // Event listener for receiving messages from the server
-    socket.onmessage = (event) => {
-      const message = event.data;
-      console.log(`Received message from server: ${message}`);
-      document.getElementById('message').textContent = message;
-    };
+    // // Event listener for receiving messages from the server
+    // socket.onmessage = (event) => {
+    //   const message = event.data;
+    //   console.log(`Received message from server: ${message}`);
+    //   document.getElementById('message').textContent = message;
+    // };
 
-    // Event listener for connection closure
-    socket.onclose = () => {
-      console.log('Connection to WebSocket server closed.');
-    };
+    // // Event listener for connection closure
+    // socket.onclose = () => {
+    //   console.log('Connection to WebSocket server closed.');
+    // };
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
   <script type="module" src="js/script.js"></script>
