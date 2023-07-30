@@ -1,0 +1,1 @@
+console.log("JS SCRIPT IS THERE")

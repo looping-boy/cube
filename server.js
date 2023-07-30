@@ -3,6 +3,9 @@ const http = require('http');
 const WebSocket = require('ws');
 const app = express();
 
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
 // Create an HTTP server
 const server = http.createServer(app);
 
@@ -33,10 +36,10 @@ wss.broadcast = function broadcast(msg) {
     });
 };
 
-// Serve the index.html file when the root URL is requested
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
+// // Serve the index.html file when the root URL is requested
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/public/index.html');
+// });
 
 // Start the server
 const PORT = process.env.PORT || 5000;
