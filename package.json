@@ -2,13 +2,22 @@
   "name": "arthur-websocket",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node main.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/looping-boy/cube.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/looping-boy/cube/issues"
+  },
+  "homepage": "https://github.com/looping-boy/cube#readme",
   "dependencies": {
     "express": "^4.18.2",
     "ws": "^8.13.0"
