@@ -66,7 +66,7 @@ const socket = new WebSocket('wss://cube-app-ded2c0470b54.herokuapp.com');
       const message = event.data;
     //   console.log(`Received message from server: ${message}`);
       document.getElementById('message').textContent = message;
-
+            console.log(message)
           const data = JSON.parse(message);
           box.rotation.x = data.gyro_x
           boxInside.rotation.x = data.gyro_x
